@@ -1,0 +1,345 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom, #1e5799, #207cca);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    position: relative;
+    width: 800px;
+    text-align: center;
+}
+
+.game-title {
+    color: #e52521;
+    font-size: 48px;
+    text-shadow: 4px 4px 0 #000;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.game-canvas {
+    width: 800px;
+    height: 450px;
+    background: linear-gradient(to bottom, #6ab9ff 60%, #8B4513 60%, #8B4513 65%, #5d2906 65%);
+    border: 6px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-ui {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 0 20px;
+}
+
+.ui-box {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    min-width: 180px;
+    border: 3px solid gold;
+}
+
+.controls {
+    margin-top: 20px;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    z-index: 100;
+    border-radius: 4px;
+    text-align: center;
+    padding: 20px;
+}
+
+.screen-title {
+    font-size: 60px;
+    color: #e52521;
+    text-shadow: 3px 3px 0 #000;
+    margin-bottom: 20px;
+}
+
+.screen-button {
+    background: #e52521;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
+    border: 4px solid #ffcc00;
+    font-weight: bold;
+    text-shadow: 2px 2px 0 #000;
+    box-shadow: 0 6px 0 #8b0000;
+    transition: all 0.1s;
+}
+
+.screen-button:hover {
+    transform: translateY(2px);
+    box-shadow: 0 4px 0 #8b0000;
+    background: #ff3333;
+}
+
+.level-indicator {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    z-index: 50;
+    border: 2px solid gold;
+}
+
+#gameOverScreen, #levelCompleteScreen, #winScreen {
+    display: none;
+}
+
+/* Game Elements */
+.mario {
+    position: absolute;
+    width: 32px;
+    height: 48px;
+    z-index: 10;
+    background: #e52521;
+    border-radius: 50% 50% 0 0;
+}
+
+.mario::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 16px;
+    background: #f9c9b3;
+    top: 8px;
+    left: 4px;
+    border-radius: 10px 10px 0 0;
+}
+
+.mario::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 12px;
+    background: #0051ba;
+    top: 30px;
+    left: 6px;
+    border-radius: 5px;
+}
+
+.platform {
+    position: absolute;
+    background: #8B4513;
+    border: 3px solid #5d2906;
+    border-radius: 5px;
+    z-index: 5;
+}
+
+.platform::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    background: #5cb85c;
+    top: -8px;
+    left: 0;
+    border-radius: 5px 5px 0 0;
+    border: 2px solid #3d8b3d;
+}
+
+.brick {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #c84c0c;
+    border: 2px solid #8B4513;
+    border-radius: 3px;
+    box-shadow: inset 3px 3px 0 rgba(255,255,255,0.3),
+                inset -3px -3px 0 rgba(0,0,0,0.2);
+    z-index: 5;
+}
+
+.question-block {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #f1c40f;
+    border: 2px solid #b7950b;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8b0000;
+    font-weight: bold;
+    z-index: 5;
+    animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-5px); }
+}
+
+.coin {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #ff9500);
+    border: 2px solid #b8860b;
+    box-shadow: 0 0 5px gold;
+    z-index: 4;
+    animation: coin-spin 2s infinite linear;
+}
+
+@keyframes coin-spin {
+    0% { transform: rotateY(0); }
+    100% { transform: rotateY(360deg); }
+}
+
+.goomba {
+    position: absolute;
+    width: 40px;
+    height: 30px;
+    background: #8B4513;
+    border-radius: 50% 50% 0 0;
+    border: 2px solid #000;
+    z-index: 4;
+}
+
+.goomba::before, .goomba::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 50%;
+    top: 8px;
+}
+
+.goomba::before { left: 8px; }
+.goomba::after { right: 8px; }
+
+.pipe {
+    position: absolute;
+    width: 80px;
+    background: #00a800;
+    border: 3px solid #006400;
+    border-radius: 5px 5px 0 0;
+    z-index: 5;
+}
+
+.pipe-top {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background: #00a800;
+    border: 3px solid #006400;
+    border-radius: 10px 10px 0 0;
+    top: -20px;
+    left: -10px;
+}
+
+.flagpole {
+    position: absolute;
+    width: 8px;
+    background: #ccc;
+    border: 1px solid #999;
+    z-index: 5;
+}
+
+.flag {
+    position: absolute;
+    width: 30px;
+    height: 20px;
+    background: #e52521;
+    border: 2px solid #8b0000;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    z-index: 5;
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+}
+
+.mobile-controls button {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 2px solid gold;
+    padding: 15px 20px;
+    margin: 0 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .game-container {
+        width: 100vw;
+        max-width: 800px;
+    }
+
+    .game-canvas {
+        width: 100vw;
+        max-width: 800px;
+        height: 56.25vw;
+        max-height: 450px;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
+
+    .controls {
+        display: none;
+    }
+}

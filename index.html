@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Mario - Enhanced Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="game-title">SUPER MARIO</h1>
+
+        <div class="game-canvas" id="gameCanvas">
+            <div class="level-indicator" id="levelIndicator">LEVEL: 1</div>
+
+            <!-- Start Screen -->
+            <div class="screen" id="startScreen">
+                <h2 class="screen-title">SUPER MARIO</h2>
+                <p>Collect coins, defeat enemies, and reach the flag!</p>
+                <button class="screen-button" id="startButton">START GAME</button>
+                <div class="controls">
+                    <p>CONTROLS: ← → to move, SPACE to jump</p>
+                    <p>MOBILE: Tap left/right sides to move, tap center to jump</p>
+                </div>
+            </div>
+
+            <!-- Game Over Screen -->
+            <div class="screen" id="gameOverScreen">
+                <h2 class="screen-title">GAME OVER</h2>
+                <p>You reached Level: <span id="finalLevel">1</span></p>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <button class="screen-button" id="restartButton">PLAY AGAIN</button>
+            </div>
+
+            <!-- Level Complete Screen -->
+            <div class="screen" id="levelCompleteScreen">
+                <h2 class="screen-title">LEVEL COMPLETE!</h2>
+                <p>Score: <span id="levelScore">0</span></p>
+                <p>Coins Collected: <span id="levelCoins">0</span></p>
+                <button class="screen-button" id="nextLevelButton">NEXT LEVEL</button>
+            </div>
+
+            <!-- Win Screen -->
+            <div class="screen" id="winScreen">
+                <h2 class="screen-title">YOU WIN!</h2>
+                <p>Congratulations! You completed all levels!</p>
+                <p>Final Score: <span id="winScore">0</span></p>
+                <button class="screen-button" id="playAgainButton">PLAY AGAIN</button>
+            </div>
+        </div>
+
+        <div class="game-ui">
+            <div class="ui-box">SCORE: <span id="score">0</span></div>
+            <div class="ui-box">COINS: <span id="coins">0</span></div>
+            <div class="ui-box">LIVES: <span id="lives">3</span></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
